@@ -2,10 +2,11 @@
 /* eslint-disable jsx-a11y/heading-has-content */
 import React from 'react';
 import headerLogo from '../images/logo.svg';
+import avatarExample from '../images/avatar-example.jpg';
 
 function App() {
   return (
-    <div>
+    <div className="page">
       <header className="header page__section page__section_place_header">
         <a href="#" target="_self">
           <img src={headerLogo} alt="Логотип Mesto Russia" className="header__logo" />
@@ -16,9 +17,9 @@ function App() {
           <div className="loader__triangle triangle-spin"></div>
         </section>
 
-        <section className="profile page__section page__section_hidden page__section_place_profile">
+        <section className="profile page__section page__section_place_profile">
           <div className="profile__avatar-wrap">
-            <img src="#" alt="аватар" className="profile__avatar" />
+            <img src={avatarExample} alt="аватар" className="profile__avatar" />
             <button type="button" aria-label="Редактировать" title="Редактировать" className="button profile__avatar-edit"></button>
           </div>
           <div className="profile__info">

@@ -1,0 +1,5 @@
+.dots-loader_visible {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
