@@ -7,7 +7,7 @@ import EditProfilePopup from './popups/EditProfilePopup';
 import AvatarEditPopup from './popups/AvatarEditPopup';
 import AddCardPopup from './popups/AddCardPopup';
 import ImagePopup from './popups/ImagePopup';
-import PopupWithForm from './popups/PopupWithForm';
+import DeletionConfirmPopup from './popups/DeletionConfirmPopup';
 
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
       <AvatarEditPopup />
       <AddCardPopup />
       <ImagePopup />
-      <PopupWithForm />
+      <DeletionConfirmPopup />
 
       <template className="card-template">
         <article className="card">

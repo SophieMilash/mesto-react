@@ -1,10 +1,6 @@
 body {
   margin: 0;
   background-color: #000;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
 }
 
 @import url('./vendor/normalize.css');
