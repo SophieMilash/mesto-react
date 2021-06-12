@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/heading-has-content */
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
@@ -44,28 +43,11 @@ function App() {
       <Header />
       <Main onEditAvatar={handleEditProfileClick} onEditProfile={handleEditAvatarClick} onAddCard={handleAddCardClick} />
       <Footer />
-
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
       <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
       <AddCardPopup isOpen={isAddCardPopupOpen} onClose={closeAllPopups} />
       <ImagePopup />
       <DeletionConfirmPopup />
-
-      <template className="card-template">
-        <article className="card">
-          <div className="card__image-wrap">
-            <img src="#" alt="Изображение карточки" className="card__image" />
-          </div>
-          <button type="button" aria-label="Удалить" title="Удалить" className="button card__delete-button"></button>
-          <div className="card__info">
-            <h2 className="card__title"></h2>
-            <div className="card__like-wrap">
-              <button type="button" aria-label="Нравится" className="button card__like-button"></button>
-              <p className="card__like-number">0</p>
-            </div>
-          </div>
-        </article>
-      </template>
     </>
   );
 }

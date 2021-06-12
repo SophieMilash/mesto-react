@@ -1,11 +1,13 @@
 import React from 'react';
 import Loader from './Loader';
+import Card from './Card';
 import api from '../utils/Api';
 
 function Main(props) {
   const [userName, setuserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
+  const [cards, setCards] = React.useState([]);
 
   Promise.all([
     api.getUserInfo(),
@@ -15,8 +17,9 @@ function Main(props) {
       setuserName(userData.name);
       setUserDescription(userData.about);
       setUserAvatar(userData.avatar);
+      setCards(cards);
     })
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 
 
   return (
@@ -36,7 +39,11 @@ function Main(props) {
         <button type="button" aria-label="Добавить" title="Добавить" className="button button_action_add-card profile__button" onClick={props.onAddCard}></button>
       </section>
 
-      <section className="cards page__section page__section_place_cards"></section>
+      <section className="cards page__section page__section_place_cards">
+        {cards.map((card) => (
+         <Card card={card} />
+        ))}
+      </section>
     </main>
   )
 }
