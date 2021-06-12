@@ -33,6 +33,11 @@ function App() {
     setIsAddCardPopupOpen(true);
   }
 
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    setIsAddCardPopupOpen(false);
+  }
 
   return (
     <>
@@ -40,9 +45,9 @@ function App() {
       <Main onEditAvatar={handleEditProfileClick} onEditProfile={handleEditAvatarClick} onAddCard={handleAddCardClick} />
       <Footer />
 
-      <EditProfilePopup isOpen={isEditProfilePopupOpen} />
-      <EditAvatarPopup isOpen={isEditAvatarPopupOpen}/>
-      <AddCardPopup isOpen={isAddCardPopupOpen}/>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
+      <AddCardPopup isOpen={isAddCardPopupOpen} onClose={closeAllPopups} />
       <ImagePopup />
       <DeletionConfirmPopup />
 

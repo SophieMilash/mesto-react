@@ -3,7 +3,7 @@ import PopupWithForm from './PopupWithForm';
 
 function EditAvatarPopup(props) {
   return (
-    <PopupWithForm name="avatar-edit" title="Обновить аватар" buttonText="Сохранить" isOpen={props.isOpen}>
+    <PopupWithForm name="avatar-edit" title="Обновить аватар" buttonText="Сохранить" isOpen={props.isOpen} onClose={props.onClose}>
       <input type="text" name="title" id="title-input" defaultValue minLength="2" maxLength="30" required className="form__input form__input_type_title" placeholder="Название" />
       <span className="form__input-error title-input-error">Вы пропустили это поле.</span>
       <input type="url" name="link" id="link-input" defaultValue required className="form__input form__input_type_link" placeholder="Ссылка на картинку" />
