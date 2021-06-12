@@ -12,13 +12,13 @@ import DeletionConfirmPopup from './popups/DeletionConfirmPopup';
 
 function App() {
   const RU_LANG = 'ru';
-
   document.documentElement.lang = RU_LANG;
   document.title = 'Mesto';
+  document.body.classList.add('page');
 
 
   return (
-    <div className="page">
+    <>
       <Header />
       <Main />
       <Footer />
@@ -44,7 +44,7 @@ function App() {
           </div>
         </article>
       </template>
-    </div>
+    </>
   );
 }
 
