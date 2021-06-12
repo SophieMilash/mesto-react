@@ -4,7 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
 import EditProfilePopup from './popups/EditProfilePopup';
-import AvatarEditPopup from './popups/AvatarEditPopup';
+import EditAvatarPopup from './popups/EditAvatarPopup';
 import AddCardPopup from './popups/AddCardPopup';
 import ImagePopup from './popups/ImagePopup';
 import DeletionConfirmPopup from './popups/DeletionConfirmPopup';
@@ -16,16 +16,33 @@ function App() {
   document.title = 'Mesto';
   document.body.classList.add('page');
 
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isAddCardPopupOpen, setIsAddCardPopupOpen] = React.useState(false);
+
+
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true);
+  }
+
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(true);
+  }
+
+  function handleAddCardClick() {
+    setIsAddCardPopupOpen(true);
+  }
+
 
   return (
     <>
       <Header />
-      <Main />
+      <Main onEditAvatar={handleEditProfileClick} onEditProfile={handleEditAvatarClick} onAddCard={handleAddCardClick} />
       <Footer />
 
-      <EditProfilePopup />
-      <AvatarEditPopup />
-      <AddCardPopup />
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} />
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen}/>
+      <AddCardPopup isOpen={isAddCardPopupOpen}/>
       <ImagePopup />
       <DeletionConfirmPopup />
 
