@@ -1,10 +1,14 @@
 import React from 'react';
 
 function Card(props) {
+  function handleClick() {
+    props.onCardClick(props.card);
+  }
+
   return (
     <article className="card">
       <div className="card__image-wrap">
-        <img src={props.card.link} alt={props.card.name} className="card__image" />
+        <img src={props.card.link} alt={props.card.name} className="card__image" onClick={handleClick} />
       </div>
       <button type="button" aria-label="Удалить" title="Удалить" className="button card__delete-button"></button>
       <div className="card__info">
