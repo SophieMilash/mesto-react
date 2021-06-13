@@ -8,25 +8,30 @@ function Main(props) {
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
   const [cards, setCards] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  Promise.all([
-    api.getUserInfo(),
-    api.getInitialCards()
-  ])
-    .then(([userData, cards]) => {
-      setuserName(userData.name);
-      setUserDescription(userData.about);
-      setUserAvatar(userData.avatar);
-      setCards(cards);
-    })
-    .catch((err) => console.log(err));
+  React.useEffect(() => {
+    setIsLoading(true);
 
+    Promise.all([
+      api.getUserInfo(),
+      api.getInitialCards()
+    ])
+      .then(([userData, cards]) => {
+        setuserName(userData.name);
+        setUserDescription(userData.about);
+        setUserAvatar(userData.avatar);
+        setCards(cards);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
+  }, []);
 
   return (
     <main className="content">
-      <Loader />
+      {isLoading && (<Loader />)}
 
-      <section className="profile page__section page__section_place_profile">
+      <section className={`profile page__section page__section_place_profile ${isLoading && "page__section_hidden"}`}>
         <div className="profile__avatar-wrap">
           <img src={userAvatar} alt="аватар" className="profile__avatar" />
           <button type="button" aria-label="Редактировать" title="Редактировать" className="button profile__avatar-edit" onClick={props.onEditAvatar}></button>
@@ -39,7 +44,7 @@ function Main(props) {
         <button type="button" aria-label="Добавить" title="Добавить" className="button button_action_add-card profile__button" onClick={props.onAddCard}></button>
       </section>
 
-      <section className="cards page__section page__section_place_cards">
+      <section className={`cards page__section page__section_place_cards ${isLoading && "page__section_hidden"}`}>
         {cards.map((card) => (
          <Card card={card} key={card._id} onCardClick={props.onCardClick} />
         ))}
