@@ -10,15 +10,10 @@ import DeletionConfirmPopup from './popups/DeletionConfirmPopup';
 
 
 function App() {
-  const RU_LANG = 'ru';
-  document.documentElement.lang = RU_LANG;
-  document.title = 'Mesto';
-  document.body.classList.add('page');
-
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isAddCardPopupOpen, setIsAddCardPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
