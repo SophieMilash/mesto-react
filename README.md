@@ -1,8 +1,26 @@
-# Getting Started with Create React App
+# Сервис Mesto
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Интерактивная страница на React, куда можно добавлять фотографии, удалять их и ставить лайки.
 
-## Available Scripts
+| [Ссылка на GitHub Pages](https://sophiemilash.github.io/mesto-react/) |
+| --- |
+
+
+**В проекте используются:**
+* React
+* Create React App
+* JavaScript ES6
+* API
+* HTML5, CSS3
+* БЭМ
+* Webpack
+* Организация файловой структуры Nested
+* Адаптивная верстка (Desktop First)
+
+
+_____
+
+## Getting Started with Create React App
 
 In the project directory, you can run:
 
