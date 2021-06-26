@@ -9,17 +9,22 @@ function Main(props) {
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-    api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
-      props.setCards((state) =>
-        state.map((c) => c._id === card._id ? newCard : c)
-      );
-    });
+    api
+      .changeLikeCardStatus(card._id, isLiked)
+      .then((newCard) => {
+        props.setCards((state) =>
+          state.map((c) => c._id === card._id ? newCard : c)
+        );
+      });
   }
 
-  // function handleCardDelete() {
-
-  // }
+  function handleCardDelete(card) {
+    api
+      .deleteCard(card._id)
+      .then(props.setCards((state) =>
+        state.filter((c) => c._id !== card._id)
+      ));
+  }
 
   return (
     <main className="content">
@@ -40,7 +45,7 @@ function Main(props) {
 
       <section className={`cards page__section page__section_place_cards ${props.isLoading && "page__section_hidden"}`}>
         {props.cards.map((card) => (
-         <Card card={card} key={card._id} onCardClick={props.onCardClick} onCardLike={handleCardLike} />
+         <Card card={card} key={card._id} onCardClick={props.onCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
         ))}
       </section>
     </main>
