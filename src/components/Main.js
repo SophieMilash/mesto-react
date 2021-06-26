@@ -2,17 +2,20 @@ import React from 'react';
 import Loader from './Loader';
 import Card from './Card';
 import CurrentUserContext from '../contexts/CurrentUserContext';
+import api from '../utils/Api';
 
 function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
-  // function handleCardLike(card) {
-  //   const isLiked = card.likes.some(i => i._id === currentUser._id);
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
 
-  //   api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-  //     setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-  //   });
-  // }
+    api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
+      props.setCards((state) =>
+        state.map((c) => c._id === card._id ? newCard : c)
+      );
+    });
+  }
 
   // function handleCardDelete() {
 
@@ -37,8 +40,7 @@ function Main(props) {
 
       <section className={`cards page__section page__section_place_cards ${props.isLoading && "page__section_hidden"}`}>
         {props.cards.map((card) => (
-         <Card card={card} key={card._id} onCardClick={props.onCardClick} />
-        //  onCardLike={handleCardLike}
+         <Card card={card} key={card._id} onCardClick={props.onCardClick} onCardLike={handleCardLike} />
         ))}
       </section>
     </main>

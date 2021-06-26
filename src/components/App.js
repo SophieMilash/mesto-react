@@ -61,7 +61,7 @@ function App() {
     <>
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
-        <Main onEditAvatar={handleEditProfileClick} onEditProfile={handleEditAvatarClick} onAddCard={handleAddCardClick} onCardClick={handleCardClick} cards={cards} isLoading={isLoading} />
+        <Main onEditAvatar={handleEditProfileClick} onEditProfile={handleEditAvatarClick} onAddCard={handleAddCardClick} onCardClick={handleCardClick} cards={cards} setCards={setCards} isLoading={isLoading} />
         <Footer />
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
