@@ -17,7 +17,8 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({
     name: '',
-    about: ''
+    about: '',
+    avatar: ''
   });
   const [cards, setCards] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -62,13 +63,26 @@ function App() {
 
   function handleUpdateUser({ name, about }) {
     api.setUserInfo({ name, about })
-      .then(() => {
+      .then((data) => {
         setCurrentUser({
           name: name,
-          about: about
+          about: about,
+          avatar: data.avatar
         });
         closeAllPopups();
       });
+  }
+
+  function handleUpdateAvatar({ avatar }) {
+    api.setAvatar({ avatar })
+    .then((data) => {
+      setCurrentUser({
+        name: data.name,
+        about: data.about,
+        avatar: avatar
+      });
+      closeAllPopups();
+    });
   }
 
   return (
@@ -78,7 +92,7 @@ function App() {
         <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddCard={handleAddCardClick} onCardClick={handleCardClick} cards={cards} setCards={setCards} isLoading={isLoading} />
         <Footer />
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
         <AddCardPopup isOpen={isAddCardPopupOpen} onClose={closeAllPopups} />
         <ImagePopup card={selectedCard !== null && selectedCard} onClose={closeAllPopups} />
         <DeletionConfirmPopup />
