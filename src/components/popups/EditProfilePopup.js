@@ -29,7 +29,7 @@ function EditProfilePopup(props) {
   }
 
   return (
-    <PopupWithForm name="edit" title="Редактировать профиль" buttonText="Сохранить" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit}>
+    <PopupWithForm name="edit" title="Редактировать профиль" buttonText="Сохранить" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading}>
       <input type="text" name="name" id="name-input" minLength="2" maxLength="40" required className="form__input form__input_type_name" placeholder="Имя" value={name} onChange={handleNameChange} />
       <span className="form__input-error name-input-error">Вы пропустили это поле.</span>
       <input type="text" name="activity" id="activity-input" minLength="2" maxLength="200" required className="form__input form__input_type_activity" placeholder="О себе" value={description} onChange={handleDescriptionChange} />

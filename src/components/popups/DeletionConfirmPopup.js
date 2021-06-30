@@ -9,9 +9,7 @@ function DeletionConfirmPopup(props) {
   }
 
   return (
-    <PopupWithForm name="deletion-confirm" title="Вы уверены?" buttonText="Да" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit}>
-
-    </PopupWithForm>
+    <PopupWithForm name="deletion-confirm" title="Вы уверены?" buttonText="Да" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading}></PopupWithForm>
   )
 }
 

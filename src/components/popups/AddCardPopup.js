@@ -22,7 +22,7 @@ function AddCardPopup(props) {
   }
 
   return (
-    <PopupWithForm name="add-card" title="Новое место" buttonText="Создать" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} >
+    <PopupWithForm name="add-card" title="Новое место" buttonText="Создать" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading}>
       <input type="text" name="title" id="title-input" minLength="2" maxLength="30" required className="form__input form__input_type_title" placeholder="Название" onChange={handleNameChange} />
       <span className="form__input-error title-input-error">Вы пропустили это поле.</span>
       <input type="url" name="link" id="link-input" required className="form__input form__input_type_link" placeholder="Ссылка на картинку" onChange={handleLinkChange} />

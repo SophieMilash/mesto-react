@@ -24,6 +24,7 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [cardDelete, setCardDelete] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isFormLoading, setIsFormLoading] = React.useState(false);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -52,17 +53,12 @@ function App() {
     setIsAddCardPopupOpen(true);
   }
 
-  function handleDeletionConfirmClick() {
-    api
-      .deleteCard(cardDelete._id)
-      .then(() => {
-        setCards((state) => state.filter((c) => c._id !== cardDelete._id));
-        closeAllPopups();
-      });
-  }
-
   function handleCardClick(card) {
     setSelectedCard(card);
+  }
+
+  function handleCardDelete() {
+    setDeletionConfirmPopup(true);
   }
 
   function closeAllPopups() {
@@ -74,41 +70,49 @@ function App() {
   }
 
   function handleUpdateUser({ name, about }) {
+    setIsFormLoading(true);
     api.setUserInfo({ name, about })
       .then((data) => {
         setCurrentUser({
           name: name,
           about: about,
           avatar: data.avatar
-        });
+        })
         closeAllPopups();
-      });
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsFormLoading(false));
   }
 
   function handleUpdateAvatar({ avatar }) {
+    setIsFormLoading(true);
     api.setAvatar({ avatar })
-    .then((data) => {
-      setCurrentUser({
-        name: data.name,
-        about: data.about,
-        avatar: avatar
-      });
-      closeAllPopups();
-    });
+      .then((data) => {
+        setCurrentUser({
+          name: data.name,
+          about: data.about,
+          avatar: avatar
+        });
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsFormLoading(false));
   }
 
   function handleAddCardSubmit({ name, link }) {
+    setIsFormLoading(true);
     api.addCard({ name, link })
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
-      });
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsFormLoading(false));
   }
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-    api
-      .changeLikeCardStatus(card._id, isLiked)
+    api.changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
         setCards((state) =>
           state.map((c) => c._id === card._id ? newCard : c)
@@ -116,8 +120,15 @@ function App() {
       });
   }
 
-  function handleCardDelete() {
-    setDeletionConfirmPopup(true);
+  function handleDeletionConfirmClick() {
+    setIsFormLoading(true);
+    api.deleteCard(cardDelete._id)
+      .then(() => {
+        setCards((state) => state.filter((c) => c._id !== cardDelete._id));
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsFormLoading(false));
   }
 
   return (
@@ -126,11 +137,11 @@ function App() {
         <Header />
         <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddCard={handleAddCardClick} onCardClick={handleCardClick} cards={cards} isLoading={isLoading} onCardLike={handleCardLike} onCardDelete={handleCardDelete} setCardDelete={setCardDelete}/>
         <Footer />
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-        <AddCardPopup isOpen={isAddCardPopupOpen} onClose={closeAllPopups} onAddCard={handleAddCardSubmit} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isFormLoading={isFormLoading} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isFormLoading={isFormLoading}/>
+        <AddCardPopup isOpen={isAddCardPopupOpen} onClose={closeAllPopups} onAddCard={handleAddCardSubmit} isFormLoading={isFormLoading} />
         <ImagePopup card={selectedCard !== null && selectedCard} onClose={closeAllPopups} />
-        <DeletionConfirmPopup isOpen={isDeletionConfirmPopup} onClose={closeAllPopups} onConfirmDeletion={handleDeletionConfirmClick}/>
+        <DeletionConfirmPopup isOpen={isDeletionConfirmPopup} onClose={closeAllPopups} onConfirmDeletion={handleDeletionConfirmClick} isFormLoading={isFormLoading}/>
       </CurrentUserContext.Provider>
     </>
   );

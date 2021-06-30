@@ -11,8 +11,8 @@ function PopupWithForm(props) {
           <fieldset className="form__profile-info">
             <legend className="form__title">{props.title}</legend>
             {props.children}
-            <button type="submit" name="submit" className={`button button_action_submit form__button form__button_position_${props.name}`}>{props.buttonText}
-              <DotsLoader />
+            <button type="submit" name="submit" className={`button button_action_submit form__button form__button_position_${props.name}`} disabled={props.isFormLoading ? true : ''}>{props.buttonText}
+              {props.isFormLoading && (<DotsLoader />)}
             </button>
           </fieldset>
         </form>

@@ -2,7 +2,7 @@ import React from 'react';
 
 function DotsLoader() {
   return (
-    <span className="dots-loader">
+    <span className="dots-loader dots-loader_visible">
       <span className="dots-loader__dot dot-pulse">.</span>
       <span className="dots-loader__dot dot-pulse">.</span>
       <span className="dots-loader__dot dot-pulse">.</span>
