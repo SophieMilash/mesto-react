@@ -55,10 +55,10 @@ function App() {
   function handleDeletionConfirmClick() {
     api
       .deleteCard(cardDelete._id)
-      .then(setCards((state) => {
-        state.filter((c) => c._id !== cardDelete._id);
+      .then(() => {
+        setCards((state) => state.filter((c) => c._id !== cardDelete._id));
         closeAllPopups();
-      }));
+      });
   }
 
   function handleCardClick(card) {
