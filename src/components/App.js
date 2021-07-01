@@ -41,6 +41,34 @@ function App() {
       .finally(() => setIsLoading(false));
   }, []);
 
+  // закрытие попапов по Esc
+  React.useEffect(() => {
+    function handleEscClose(evt) {
+      if (evt.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    document.addEventListener('keydown', handleEscClose);
+
+    return () => {
+      document.removeEventListener('keydown', handleEscClose);
+    };
+  }, []);
+
+  // закрытие попапов кликом по оверлею
+  React.useEffect(() => {
+    function handleOverlayClose(evt) {
+      if (evt.target.classList.contains('popup_opened')) {
+        closeAllPopups();
+      }
+    }
+    document.addEventListener('click', handleOverlayClose);
+
+    return () => {
+      document.removeEventListener('click', handleOverlayClose);
+    };
+  }, []);
+
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
