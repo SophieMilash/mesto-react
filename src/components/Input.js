@@ -32,15 +32,7 @@ function Input(props) {
     // cardLink: ''
   });
 
-  const [formValidity, setFormValidity] = React.useState({
-    userNameValid: false
-    // userActivityValid: false,
-    // avatarLinkValid: false,
-    // cardTitleValid: false,
-    // cardLinkValid: false
-  });
-
-  const errors = {
+const [errors, setErrors] = React.useState({
     // true if error
     // false if correct
 
@@ -64,7 +56,7 @@ function Input(props) {
     //   required: true,
     //   isUrl: true
     // }
-  };
+  });
 
   const handleInputChange = React.useCallback((e) => {
     const value = e.target.value;
@@ -77,29 +69,32 @@ function Input(props) {
     const { userName } = formValues;
 
 
-    const userNameValidationResult = Object.keys(validators.userName).map(
-      errorKey => {
+    const userNameValidationResult = Object.keys(validators.userName)
+      .map((errorKey) => {
         const errorResult = validators.userName[errorKey](userName);
 
         return { [errorKey]: errorResult };
-      }
-    ).reduce((acc, el) => ({...acc, ...el}), {});
+      })
+      .reduce((acc, el) => ({...acc, ...el}), {});
 
-  }, [formValues, setFormValidity]);
+    setErrors({
+      userName: userNameValidationResult
+    });
+  }, [formValues, setErrors]);
 
   const { userName } = formValues;
-  const { userNameValid } = formValidity;
-  const isSubmitDisabled = !userNameValid;
+  const isUserNameInvalid = Object.values(errors.userName).some(Boolean);
+
+  const isSubmitDisabled = isUserNameInvalid;
 
   return (
     <>
-      <input type={props.type} name={props.name} value={userName} onChange={handleInputChange} id="link-input" required className="form__input form__input_type_link" placeholder="Ссылка на картинку" ref={props.inputRef} />
-      {/* {!userNameValid && <span className="form__input-error link-input-error">Вы пропустили это поле.</span>} */}
+      <input type={props.type} name={props.name} value={userName} onChange={handleInputChange} className="form__input" placeholder={props.placeholder} maxLength={props.maxLength} />
       {errors.userName.required && <span className="form__input-error link-input-error">Вы пропустили это поле.</span>}
       {errors.userName.minLength && <span className="form__input-error link-input-error">Минимальня длина - 2 символа</span>}
       {/* {errors..isUrl && <span className="form__input-error link-input-error">Введите адрес сайта</span>} */}
 
-      <button disabled={isSubmitDisabled}></button>
+      <button className="button button_action_submit form__button" disabled={isSubmitDisabled}>Test</button>
     </>
   )
 }
