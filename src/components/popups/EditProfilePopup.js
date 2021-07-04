@@ -1,12 +1,14 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-// import Input from '../Input';
 
 function EditProfilePopup(props) {
   const currentUser = React.useContext(CurrentUserContext);
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
+  const [nameValidityError, setNameValidityError] = React.useState('');
+  const [descriptionValidityError, setDescriptionValidityError] = React.useState('');
+  const isSubmitDisabled = nameValidityError || descriptionValidityError;
 
   React.useEffect(() => {
     setName(currentUser.name);
@@ -14,11 +16,31 @@ function EditProfilePopup(props) {
   }, [currentUser]);
 
   function handleNameChange(e) {
-    setName(e.target.value);
+    const nameInput = e.target;
+    const {value, validity, validationMessage} = nameInput;
+    setName(value);
+
+    if (validity.valueMissing) {
+      setNameValidityError('Вы пропустили это поле');
+    } else if (validity.tooShort) {
+      setNameValidityError('Минимальня длина - 2 символа');
+    } else {
+      setNameValidityError(validationMessage);
+    }
   }
 
   function handleDescriptionChange(e) {
-    setDescription(e.target.value);
+    const descriptionInput = e.target;
+    const {value, validity, validationMessage} = descriptionInput;
+    setDescription(value);
+
+    if (validity.valueMissing) {
+      setDescriptionValidityError('Вы пропустили это поле');
+    } else if (validity.tooShort) {
+      setDescriptionValidityError('Минимальня длина - 2 символа');
+    } else {
+      setDescriptionValidityError(validationMessage);
+    }
   }
 
   function handleSubmit(e) {
@@ -30,14 +52,11 @@ function EditProfilePopup(props) {
   }
 
   return (
-    <PopupWithForm name="edit" title="Редактировать профиль" buttonText="Сохранить" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading}>
-      <input type="text" name="name" id="name-input" minLength="2" maxLength="40" required className="form__input form__input_type_name" placeholder="Имя" value={name} onChange={handleNameChange} />
-      <span className="form__input-error name-input-error">Вы пропустили это поле.</span>
-      <input type="text" name="activity" id="activity-input" minLength="2" maxLength="200" required className="form__input form__input_type_activity" placeholder="О себе" value={description} onChange={handleDescriptionChange} />
-      <span className="form__input-error activity-input-error">Вы пропустили это поле.</span>
-
-      {/* <Input type="text" name="userName" placeholder="Имя" maxLength="40" /> */}
-
+    <PopupWithForm name="edit" title="Редактировать профиль" buttonText="Сохранить" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading} isSubmitDisabled={isSubmitDisabled} >
+      <input type="text" name="name" minLength="2" maxLength="40" className="form__input form__input_type_name" placeholder="Имя" value={name} onChange={handleNameChange} required/>
+      {nameValidityError && <span className="form__input-error form__input-error_active">{nameValidityError}</span>}
+      <input type="text" name="activity" minLength="2" maxLength="200" required className="form__input form__input_type_activity" placeholder="О себе" value={description} onChange={handleDescriptionChange} />
+      {descriptionValidityError && <span className="form__input-error form__input-error_active">{descriptionValidityError}</span>}
     </PopupWithForm>
   )
 }
