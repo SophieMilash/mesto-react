@@ -4,29 +4,54 @@ import PopupWithForm from './PopupWithForm';
 function AddCardPopup(props) {
   const [name, setName] = React.useState('');
   const [link, setLink] = React.useState('');
+  const [cardTitleValidityError, setCardTitleValidityError] = React.useState('');
+  const [cardLinkValidityError, setCardLinkValidityError] = React.useState('');
+  const isSubmitDisabled = cardTitleValidityError || cardLinkValidityError;
 
   function handleNameChange(e) {
-    setName(e.target.value);
+    const cardTitleInput = e.target;
+    const {value, validity, validationMessage} = cardTitleInput;
+    setName(value);
+
+    if (validity.valueMissing) {
+      setCardTitleValidityError('Вы пропустили это поле');
+    } else if (validity.tooShort) {
+      setCardTitleValidityError('Минимальня длина - 2 символа');
+    } else {
+      setCardTitleValidityError(validationMessage);
+    }
   }
 
   function handleLinkChange(e) {
-    setLink(e.target.value);
+    const cardLinkInput = e.target;
+    const {value, validity, validationMessage} = cardLinkInput;
+    setLink(value);
+
+    if (validity.valueMissing) {
+      setCardLinkValidityError('Вы пропустили это поле');
+    } else if (validity.typeMismatch) {
+      setCardLinkValidityError('Введите адрес сайта');
+    } else {
+      setCardLinkValidityError(validationMessage);
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+
     props.onAddCard({
       name: name,
       link: link
     });
+    e.target.reset();
   }
 
   return (
-    <PopupWithForm name="add-card" title="Новое место" buttonText="Создать" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading}>
-      <input type="text" name="title" id="title-input" minLength="2" maxLength="30" required className="form__input form__input_type_title" placeholder="Название" onChange={handleNameChange} />
-      <span className="form__input-error title-input-error">Вы пропустили это поле.</span>
-      <input type="url" name="link" id="link-input" required className="form__input form__input_type_link" placeholder="Ссылка на картинку" onChange={handleLinkChange} />
-      <span className="form__input-error link-input-error">Введите адрес сайта.</span>
+    <PopupWithForm name="add-card" title="Новое место" buttonText="Создать" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading} isSubmitDisabled={isSubmitDisabled} >
+      <input type="text" name="title" minLength="2" maxLength="30" required className="form__input" placeholder="Название" onChange={handleNameChange} />
+      {cardTitleValidityError && <span className="form__input-error form__input-error_active">{cardTitleValidityError}</span>}
+      <input type="url" name="link" required className="form__input" placeholder="Ссылка на картинку" onChange={handleLinkChange} />
+      {cardLinkValidityError && <span className="form__input-error form__input-error_active">{cardLinkValidityError}</span>}
     </PopupWithForm>
   )
 }
