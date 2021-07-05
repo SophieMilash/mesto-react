@@ -2,18 +2,18 @@ import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
-import EditProfilePopup from './popups/EditProfilePopup';
-import EditAvatarPopup from './popups/EditAvatarPopup';
-import AddCardPopup from './popups/AddCardPopup';
-import ImagePopup from './popups/ImagePopup';
-import DeletionConfirmPopup from './popups/DeletionConfirmPopup';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
+import ImagePopup from './ImagePopup';
+import DeletionConfirmPopup from './DeletionConfirmPopup';
 import CurrentUserContext from '../contexts/CurrentUserContext';
-import api from '../utils/Api';
+import api from '../utils/api';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [isAddCardPopupOpen, setIsAddCardPopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isDeletionConfirmPopup, setDeletionConfirmPopup] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({
@@ -78,7 +78,7 @@ function App() {
   }
 
   function handleAddCardClick() {
-    setIsAddCardPopupOpen(true);
+    setIsAddPlacePopupOpen(true);
   }
 
   function handleCardClick(card) {
@@ -114,7 +114,7 @@ function App() {
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setIsAddCardPopupOpen(false);
+    setIsAddPlacePopupOpen(false);
     setDeletionConfirmPopup(false);
     setSelectedCard(null);
     handleResetForms();
@@ -191,7 +191,7 @@ function App() {
         <Footer />
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isFormLoading={isFormLoading} />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isFormLoading={isFormLoading}/>
-        <AddCardPopup isOpen={isAddCardPopupOpen} onClose={closeAllPopups} onAddCard={handleAddCardSubmit} isFormLoading={isFormLoading} />
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddCard={handleAddCardSubmit} isFormLoading={isFormLoading} />
         <ImagePopup card={selectedCard !== null && selectedCard} onClose={closeAllPopups} />
         <DeletionConfirmPopup isOpen={isDeletionConfirmPopup} onClose={closeAllPopups} onConfirmDeletion={handleDeletionConfirmClick} isFormLoading={isFormLoading}/>
       </CurrentUserContext.Provider>
