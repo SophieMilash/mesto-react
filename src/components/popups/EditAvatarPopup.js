@@ -3,6 +3,23 @@ import PopupWithForm from './PopupWithForm';
 
 function EditAvatarPopup(props) {
   const inputRef = React.useRef();
+  const [avatar, setAvatar] = React.useState('');
+  const [avatarValidityError, setAvatarValidityError] = React.useState('');
+  const isSubmitDisabled = avatarValidityError;
+
+  function handleAvatarChange(e) {
+    const avatarInput = e.target;
+    const { value, validity, validationMessage } = avatarInput;
+    setAvatar(value);
+
+    if (validity.valueMissing) {
+      setAvatarValidityError('Вы пропустили это поле');
+    } else if (validity.typeMismatch) {
+      setAvatarValidityError('Введите адрес сайта');
+    } else {
+      setAvatarValidityError(validationMessage);
+    }
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -13,9 +30,9 @@ function EditAvatarPopup(props) {
   }
 
   return (
-    <PopupWithForm name="avatar-edit" title="Обновить аватар" buttonText="Сохранить" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading}>
-      <input type="url" name="link" id="link-input" required className="form__input form__input_type_link" placeholder="Ссылка на картинку" ref={inputRef} />
-      <span className="form__input-error link-input-error">Введите адрес сайта.</span>
+    <PopupWithForm name="avatar-edit" title="Обновить аватар" buttonText="Сохранить" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading} isSubmitDisabled={isSubmitDisabled} >
+      <input type="url" name="link" required className="form__input" placeholder="Ссылка на картинку" ref={inputRef} value={avatar} onChange={handleAvatarChange} />
+      {avatarValidityError && <span className="form__input-error form__input-error_active">{avatarValidityError}</span>}
     </PopupWithForm>
   )
 }
