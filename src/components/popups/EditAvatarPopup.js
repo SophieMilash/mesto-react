@@ -27,13 +27,12 @@ function EditAvatarPopup(props) {
     props.onUpdateAvatar({
       avatar: inputRef.current.value
     });
-    e.target.reset();
   }
 
   return (
     <PopupWithForm name="avatar-edit" title="Обновить аватар" buttonText="Сохранить" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading} isSubmitDisabled={isSubmitDisabled} >
-      <input type="url" name="link" required className="form__input" placeholder="Ссылка на картинку" ref={inputRef} value={avatar} onChange={handleAvatarChange} />
-      {avatarValidityError && <span className="form__input-error form__input-error_active">{avatarValidityError}</span>}
+      <input type="url" name="link" id="avatar-link" required className="form__input" placeholder="Ссылка на картинку" ref={inputRef} value={avatar} onChange={handleAvatarChange} />
+      {avatarValidityError && <span className="form__input-error form__input-error_active avatar-link-error">{avatarValidityError}</span>}
     </PopupWithForm>
   )
 }

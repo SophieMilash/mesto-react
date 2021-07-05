@@ -53,7 +53,7 @@ function App() {
     return () => {
       document.removeEventListener('keydown', handleEscClose);
     };
-  }, []);
+  });
 
   // закрытие попапов кликом по оверлею
   React.useEffect(() => {
@@ -67,7 +67,7 @@ function App() {
     return () => {
       document.removeEventListener('click', handleOverlayClose);
     };
-  }, []);
+  });
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -89,12 +89,36 @@ function App() {
     setDeletionConfirmPopup(true);
   }
 
+  function handleResetForms() {
+    const forms = document.querySelectorAll('.form');
+    Array.from(forms).forEach(form => form.reset());
+  }
+
+  function removeInputErrors() {
+    const inputList = document.querySelectorAll('.form__input');
+    Array.from(inputList).forEach(input => {
+      if (!input.validity.valid) {
+        hideInputErrors(input);
+      }
+    });
+  }
+
+  function hideInputErrors(input) {
+    const errorElements = document.querySelectorAll(`.${input.id}-error`);
+    Array.from(errorElements).forEach(error => {
+      error.classList.remove('form__input-error_active');
+      error.textContent = '';
+    });
+  }
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsAddCardPopupOpen(false);
     setDeletionConfirmPopup(false);
     setSelectedCard(null);
+    handleResetForms();
+    removeInputErrors();
   }
 
   function handleUpdateUser({ name, about }) {

@@ -43,15 +43,14 @@ function AddCardPopup(props) {
       name: name,
       link: link
     });
-    e.target.reset();
   }
 
   return (
     <PopupWithForm name="add-card" title="Новое место" buttonText="Создать" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading} isSubmitDisabled={isSubmitDisabled} >
-      <input type="text" name="title" minLength="2" maxLength="30" required className="form__input" placeholder="Название" onChange={handleNameChange} />
-      {cardTitleValidityError && <span className="form__input-error form__input-error_active">{cardTitleValidityError}</span>}
-      <input type="url" name="link" required className="form__input" placeholder="Ссылка на картинку" onChange={handleLinkChange} />
-      {cardLinkValidityError && <span className="form__input-error form__input-error_active">{cardLinkValidityError}</span>}
+      <input type="text" name="title" id="card-title" minLength="2" maxLength="30" required className="form__input" placeholder="Название" onChange={handleNameChange} />
+      {cardTitleValidityError && <span className="form__input-error form__input-error_active card-title-error">{cardTitleValidityError}</span>}
+      <input type="url" name="link" id="card-link" required className="form__input" placeholder="Ссылка на картинку" onChange={handleLinkChange} />
+      {cardLinkValidityError && <span className="form__input-error form__input-error_active card-link-error">{cardLinkValidityError}</span>}
     </PopupWithForm>
   )
 }

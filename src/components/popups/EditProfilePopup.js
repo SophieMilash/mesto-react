@@ -50,15 +50,14 @@ function EditProfilePopup(props) {
       name: name,
       about: description
     });
-    e.target.reset();
   }
 
   return (
     <PopupWithForm name="edit" title="Редактировать профиль" buttonText="Сохранить" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading} isSubmitDisabled={isSubmitDisabled} >
-      <input type="text" name="name" minLength="2" maxLength="40" className="form__input" placeholder="Имя" value={name} onChange={handleNameChange} required/>
-      {nameValidityError && <span className="form__input-error form__input-error_active">{nameValidityError}</span>}
-      <input type="text" name="activity" minLength="2" maxLength="200" required className="form__input" placeholder="О себе" value={description} onChange={handleDescriptionChange} />
-      {descriptionValidityError && <span className="form__input-error form__input-error_active">{descriptionValidityError}</span>}
+      <input type="text" name="name" id="user-name" minLength="2" maxLength="40" className="form__input" placeholder="Имя" value={name} onChange={handleNameChange} required/>
+      {nameValidityError && <span className="form__input-error form__input-error_active user-name-error">{nameValidityError}</span>}
+      <input type="text" name="activity" id="user-activity" minLength="2" maxLength="200" required className="form__input" placeholder="О себе" value={description} onChange={handleDescriptionChange} />
+      {descriptionValidityError && <span className="form__input-error form__input-error_active user-activity-error">{descriptionValidityError}</span>}
     </PopupWithForm>
   )
 }
