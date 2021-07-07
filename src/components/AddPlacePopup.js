@@ -45,6 +45,13 @@ function AddPlacePopup(props) {
     });
   }
 
+  React.useEffect(() => {
+    setName('');
+    setLink('');
+    setCardTitleValidityError('');
+    setCardLinkValidityError('');
+  }, [props.onClose]);
+
   return (
     <PopupWithForm name="add-card" title="Новое место" buttonText="Создать" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading} isSubmitDisabled={isSubmitDisabled} >
       <input type="text" name="title" id="card-title" value={name} minLength="2" maxLength="30" required className="form__input" placeholder="Название" onChange={handleNameChange} />

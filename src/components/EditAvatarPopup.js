@@ -28,6 +28,11 @@ function EditAvatarPopup(props) {
     });
   }
 
+  React.useEffect(() => {
+    setAvatar('');
+    setAvatarValidityError('');
+  }, [props.onClose]);
+
   return (
     <PopupWithForm name="avatar-edit" title="Обновить аватар" buttonText="Сохранить" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} isFormLoading={props.isFormLoading} isSubmitDisabled={isSubmitDisabled} >
       <input type="url" name="link" id="avatar-link" required className="form__input" placeholder="Ссылка на картинку" value={avatar} onChange={handleAvatarChange} />
