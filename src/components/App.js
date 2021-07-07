@@ -8,7 +8,7 @@ import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import DeletionConfirmPopup from './DeletionConfirmPopup';
 import CurrentUserContext from '../contexts/CurrentUserContext';
-import api from '../utils/api';
+import api from '../utils/api.js';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -53,7 +53,7 @@ function App() {
     return () => {
       document.removeEventListener('keydown', handleEscClose);
     };
-  });
+  }, []);
 
   // закрытие попапов кликом по оверлею
   React.useEffect(() => {
@@ -67,7 +67,7 @@ function App() {
     return () => {
       document.removeEventListener('click', handleOverlayClose);
     };
-  });
+  }, []);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -89,27 +89,27 @@ function App() {
     setDeletionConfirmPopup(true);
   }
 
-  function handleResetForms() {
-    const forms = document.querySelectorAll('.form');
-    Array.from(forms).forEach(form => form.reset());
-  }
+  // function handleResetForms() {
+  //   const forms = document.querySelectorAll('.form');
+  //   Array.from(forms).forEach(form => form.reset());
+  // }
 
-  function removeInputErrors() {
-    const inputList = document.querySelectorAll('.form__input');
-    Array.from(inputList).forEach(input => {
-      if (!input.validity.valid) {
-        hideInputErrors(input);
-      }
-    });
-  }
+  // function removeInputErrors() {
+  //   const inputList = document.querySelectorAll('.form__input');
+  //   Array.from(inputList).forEach(input => {
+  //     if (!input.validity.valid) {
+  //       hideInputErrors(input);
+  //     }
+  //   });
+  // }
 
-  function hideInputErrors(input) {
-    const errorElements = document.querySelectorAll(`.${input.id}-error`);
-    Array.from(errorElements).forEach(error => {
-      error.classList.remove('form__input-error_active');
-      error.textContent = '';
-    });
-  }
+  // function hideInputErrors(input) {
+  //   const errorElements = document.querySelectorAll(`.${input.id}-error`);
+  //   Array.from(errorElements).forEach(error => {
+  //     error.classList.remove('form__input-error_active');
+  //     error.textContent = '';
+  //   });
+  // }
 
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
@@ -117,8 +117,8 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setDeletionConfirmPopup(false);
     setSelectedCard(null);
-    handleResetForms();
-    removeInputErrors();
+    // handleResetForms();
+    // removeInputErrors();
   }
 
   function handleUpdateUser({ name, about }) {
@@ -169,7 +169,8 @@ function App() {
         setCards((state) =>
           state.map((c) => c._id === card._id ? newCard : c)
         );
-      });
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleDeletionConfirmClick() {
